@@ -3,13 +3,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-int stack[100];
+char stack[100];
 int top=-1;
-int expr[100];
+char expr[100];
 typedef enum{lp,rp,mul,divi,add,sub,eos,operand} precedence;
 
-int isp[] = {0,19,12,12,13,13,6}
-int icp[] = {20,19,12,12,13,13,13,6}
+int isp[] = {0,19,12,12,13,13,6};
+int icp[] = {20,19,12,12,13,13,13,6};
 
 void push(char n){
     if (top==MAXSIZE-1){
@@ -54,13 +54,32 @@ int main(){
     printf("Enter the infix notation: ");
     scanf("%s",expr);
 
-    n=strlen(exp);
-    push("\0");
+    n=strlen(expr);
+    push('\0');
 
     for(int i=0;i<n;i++){
         symbol=expr[i];
         k=getToken(symbol);
 
-        if (k==)
+        if (k==operand){
+            printf("%c",symbol);
+        }
+        else if(k==rp){
+            while(stack[top]!='('){
+                printf("%c",pop());
+            }
+            ch=pop();
+        }
+        else{
+            while(isp[getToken(stack[top])]>=icp[k]) printf("%c",pop());
+            push(symbol);
+        }
+        
     }
+
+    while((k=pop())!='\0'){
+        printf("%c",k);
+    }
+    printf("\n");
+    return 0;
 }
