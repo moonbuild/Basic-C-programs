@@ -6,7 +6,7 @@ struct node {
     struct node *lchild, *rchild;
 };
 
-struct node *root=NULL, *trav=NULL;
+struct node *root=NULL;
 struct node* createTree(){
 	struct node *new;
 	int x;
