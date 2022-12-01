@@ -10,6 +10,7 @@ struct node{
 struct node *createNewNode(int n){
     struct node *temp;
     temp=(struct node*)malloc(sizeof(struct node));
+    
     temp->data=n;
     temp->left=NULL;
     temp->right=NULL;
@@ -17,6 +18,14 @@ struct node *createNewNode(int n){
     return temp;
 }
 
+struct node *findMin(struct node* node){
+    struct node *trav;
+    trav=node;
+    while(trav->left!=NULL){
+        trav=trav->left;
+    }
+    return trav;
+}
 
 struct node *insert(struct node *root, int n){
     if(root==NULL) {
@@ -32,16 +41,7 @@ struct node *insert(struct node *root, int n){
 
 }
 
-struct node* findMin(struct node* node){
-    struct node *trav;
-    trav=node;
-    while(trav->left!=NULL){
-        trav=trav->left;
-    }
-    return trav;
-}
-
-struct node* delere(struct node* root, int x){
+struct node *delere(struct node* root, int x){
     if(root==NULL){
         return root;
     }
@@ -51,6 +51,7 @@ struct node* delere(struct node* root, int x){
     else if(x>root->data){
         root->right=delere(root->right, x);
     }
+
     else{
         if(root->left==NULL && root->right==NULL){
             free(root);
@@ -60,19 +61,21 @@ struct node* delere(struct node* root, int x){
             struct node *temp;
             temp = root->left;
             free(root);
-            root=root->left;
+            root=temp;
         }
         else if(root->left==NULL && root->right!=NULL){
             struct node *temp;
             temp = root->right;
             free(root);
-            root=root->right;
+            root=temp;
         }
         else{
             struct node *temp;
             temp=(struct node*)malloc(sizeof(struct node));
+
             temp = findMin(root->right);
             root->data=temp->data;
+            
             root->right=delere(root->right, temp->data);
         }
     }
@@ -85,21 +88,20 @@ void inorder(struct node *newNode){
         inorder(newNode->left);
         printf("%d\t",newNode->data);
         inorder(newNode->right);
-        
     }
 }
 void preorder(struct node *newNode){
     if(newNode!=NULL){
-    printf("%d\t",newNode->data);
-    preorder(newNode->left);
-    preorder(newNode->right);
+        printf("%d\t",newNode->data);
+        preorder(newNode->left);
+        preorder(newNode->right);
     }
 }
 void postorder(struct node *newNode){
     if(newNode!=NULL){
-    postorder(newNode->left);
-    postorder(newNode->right);
-    printf("%d\t",newNode->data);
+        postorder(newNode->left);
+        postorder(newNode->right);
+        printf("%d\t",newNode->data);
     }
 }
 
